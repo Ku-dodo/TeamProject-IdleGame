@@ -22,6 +22,7 @@ public class UIUseSkillSlots : MonoBehaviour
         ImgDurate.fillAmount = 0;
         ImgCoolDown.fillAmount = 0;
         StopAllCoroutines();
+        _skillBtn.onClick.RemoveAllListeners();
 
         if (_equipSkillData.SkillID == "Empty")
         {
@@ -30,12 +31,11 @@ public class UIUseSkillSlots : MonoBehaviour
         }
         else
         {
-            ImgSkillIcon.sprite = Manager.SkillData.SkillDataDictionary[_equipSkillData.SkillID].Sprite;
+            ImgSkillIcon.sprite = Manager.Data.SkillDataDictionary[_equipSkillData.SkillID].Sprite;
             ImgSkillIcon.gameObject.SetActive(true);
             StartCoroutine(SetUICoolDown());
         }
 
-        _skillBtn.onClick.RemoveAllListeners();
         _skillBtn.onClick.AddListener(_equipSkillData.SkillScript.UseSkill);
         _skillBtn.onClick.AddListener(SetUIUseSkill);
     }
@@ -47,22 +47,24 @@ public class UIUseSkillSlots : MonoBehaviour
 
     IEnumerator SetUIDurateTime()
     {
-        while (_equipSkillData.SkillScript.CurrentDurateTime > Mathf.Epsilon)
+        do
         {
             yield return new WaitForSeconds(0.1f);
             ImgDurate.fillAmount = _equipSkillData.SkillScript.CurrentDurateTime / _equipSkillData.SkillScript.EffectDurateTime;
-        }
+        } while (_equipSkillData.SkillScript.CurrentDurateTime > Mathf.Epsilon);
+
         ImgDurate.fillAmount = 0f;
         StartCoroutine(SetUICoolDown());
     }
 
     IEnumerator SetUICoolDown()
     {
-        while (_equipSkillData.SkillScript.CurrentCoolDown > Mathf.Epsilon)
+        do
         {
             yield return new WaitForSeconds(0.1f);
             ImgCoolDown.fillAmount = _equipSkillData.SkillScript.CurrentCoolDown / _equipSkillData.SkillScript.CoolDown;
-        }
+        } while (_equipSkillData.SkillScript.CurrentCoolDown > Mathf.Epsilon);
+
         ImgCoolDown.fillAmount = 0f;
     }
 }

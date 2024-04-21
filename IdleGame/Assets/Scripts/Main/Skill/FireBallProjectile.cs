@@ -7,8 +7,8 @@ public class FireBallProjectile : SkillProjectileHandlerBase
     private void Start()
     {
         string _skillID = "S0001";
-        _skillDamageRatio = (Manager.SkillData.SkillDataDictionary[_skillID].SkillDamage
-            + (Manager.Data.SkillInvenDictionary[_skillID].level - 1) + Manager.SkillData.SkillDataDictionary[_skillID].ReinforceDamage)
+        _skillDamageRatio = (Manager.Data.SkillDataDictionary[_skillID].SkillDamage
+            + (Manager.Data.SkillInvenDictionary[_skillID].level - 1) + Manager.Data.SkillDataDictionary[_skillID].ReinforceDamage)
             / 100;
     }
 

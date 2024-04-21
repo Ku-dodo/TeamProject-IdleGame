@@ -59,7 +59,7 @@ public class UIPopupEquipContainer : UIBase
         itemSlots.Clear();
         if (UIPopupEquipment._equipFillterType == EquipFillterType.Weapon)
         {
-            foreach (var itemData in Manager.Inventory.WeaponItemList)
+            foreach (var itemData in Manager.Data.WeaponItemList)
             {
                 UIPopupEquipSlots slot = Manager.Asset.InstantiatePrefab("ItemSlot_Weapon", gameObject.transform).GetComponent<UIPopupEquipSlots>();
                 itemSlots.Add(slot.gameObject);
@@ -71,7 +71,7 @@ public class UIPopupEquipContainer : UIBase
         }
         else if (UIPopupEquipment._equipFillterType == EquipFillterType.Armor)
         {
-            foreach (var itemData in Manager.Inventory.ArmorItemList)
+            foreach (var itemData in Manager.Data.ArmorItemList)
             {
                 UIPopupEquipSlots slot = Manager.Asset.InstantiatePrefab("ItemSlot_Armor", gameObject.transform).GetComponent<UIPopupEquipSlots>();
                 itemSlots.Add(slot.gameObject);

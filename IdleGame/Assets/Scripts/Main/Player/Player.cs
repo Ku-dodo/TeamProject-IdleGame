@@ -116,8 +116,7 @@ public class Player : MonoBehaviour, IDamageable
 
         enemyList = Manager.Stage.GetEnemyList();
 
-        Manager.Inventory.InitItem();
-        Manager.SkillData.InitSkill();
+        Manager.Data.InitDataBase();
         Manager.FollowerData.InitFollower();
         EquipmentStatModifier();
 
@@ -463,22 +462,22 @@ public class Player : MonoBehaviour, IDamageable
         EquipHPStat = 0;
 
         //장비 보유 효과
-        foreach (var item in Manager.Inventory.UserInventory.UserItemData.Where(itemData => itemData.level > 1 || itemData.hasCount > 0).ToList())
+        foreach (var item in Manager.Data.Inventory.UserItemData.Where(itemData => itemData.level > 1 || itemData.hasCount > 0).ToList())
         {
-            if (Manager.Inventory.ItemDataDictionary[item.itemID].StatType == StatType.Attack)
+            if (Manager.Data.ItemDataBase[item.itemID].StatType == StatType.Attack)
             {
-                RetentionAttackEffect += Manager.Inventory.ItemDataDictionary[item.itemID].RetentionEffect + Manager.Inventory.ItemDataDictionary[item.itemID].ReinforceEffect * (item.level - 1);
+                RetentionAttackEffect += Manager.Data.ItemDataBase[item.itemID].RetentionEffect + Manager.Data.ItemDataBase[item.itemID].ReinforceEffect * (item.level - 1);
             }
-            else if (Manager.Inventory.ItemDataDictionary[item.itemID].StatType == StatType.HP)
+            else if (Manager.Data.ItemDataBase[item.itemID].StatType == StatType.HP)
             {
-                RetentionHPEffect += Manager.Inventory.ItemDataDictionary[item.itemID].RetentionEffect + Manager.Inventory.ItemDataDictionary[item.itemID].ReinforceEffect * (item.level - 1);
+                RetentionHPEffect += Manager.Data.ItemDataBase[item.itemID].RetentionEffect + Manager.Data.ItemDataBase[item.itemID].ReinforceEffect * (item.level - 1);
             }
         }
 
         //스킬 보유 효과
         foreach (var item in Manager.Data.UserSkillData.UserInvenSkill.Where(itemData => itemData.level > 1 || itemData.hasCount > 0).ToList())
         {
-            RetentionAttackEffect += Manager.SkillData.SkillDataDictionary[item.itemID].RetentionEffect + Manager.SkillData.SkillDataDictionary[item.itemID].ReinforceEffect * (item.level - 1);
+            RetentionAttackEffect += Manager.Data.SkillDataDictionary[item.itemID].RetentionEffect + Manager.Data.SkillDataDictionary[item.itemID].ReinforceEffect * (item.level - 1);
         }
 
         //동료 보유 효과
@@ -488,17 +487,17 @@ public class Player : MonoBehaviour, IDamageable
         }
 
         //장비 장착 효과
-        var filteredEquipItem = Manager.Inventory.UserInventory.UserItemData.Where(itemdata => itemdata.equipped == true).ToList();
+        var filteredEquipItem = Manager.Data.Inventory.UserItemData.Where(itemdata => itemdata.equipped == true).ToList();
 
         foreach (var item in filteredEquipItem)
         {
-            if (Manager.Inventory.ItemDataDictionary[item.itemID].StatType == StatType.Attack && item.equipped == true)
+            if (Manager.Data.ItemDataBase[item.itemID].StatType == StatType.Attack && item.equipped == true)
             {
-                EquipAttackStat += Manager.Inventory.ItemDataDictionary[item.itemID].EquipStat + Manager.Inventory.ItemDataDictionary[item.itemID].ReinforceEquip * (item.level - 1);
+                EquipAttackStat += Manager.Data.ItemDataBase[item.itemID].EquipStat + Manager.Data.ItemDataBase[item.itemID].ReinforceEquip * (item.level - 1);
             }
-            else if (Manager.Inventory.ItemDataDictionary[item.itemID].StatType == StatType.HP && item.equipped == true)
+            else if (Manager.Data.ItemDataBase[item.itemID].StatType == StatType.HP && item.equipped == true)
             {
-                EquipHPStat += Manager.Inventory.ItemDataDictionary[item.itemID].EquipStat + Manager.Inventory.ItemDataDictionary[item.itemID].ReinforceEquip * (item.level - 1);
+                EquipHPStat += Manager.Data.ItemDataBase[item.itemID].EquipStat + Manager.Data.ItemDataBase[item.itemID].ReinforceEquip * (item.level - 1);
             }
         }
 

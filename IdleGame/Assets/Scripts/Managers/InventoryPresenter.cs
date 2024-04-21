@@ -2,64 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class InventoryManager
+public class InventoryPresenter
 {
-    #region ItemData Fields & Properties
-
-    private string _itemDataBaseText;
-    private ItemContainerBlueprint _itemDataBase;
-    private Dictionary<string, ItemBlueprint> _itemDataDictionary = new();
-
-    public Dictionary<string, ItemBlueprint> ItemDataDictionary => _itemDataDictionary;
-
-    #endregion
-
-    #region ItemDataMethod
-
-    public void ParseItemData()
-    {
-        _itemDataBase = Manager.Asset.GetBlueprint("ItemDataContainer") as ItemContainerBlueprint;
-        foreach (var itemData in _itemDataBase.itemDatas)
-        {
-            _itemDataDictionary.Add(itemData.ItemID, itemData);
-        }
-    }
-    #endregion
-
-    #region InventoryData Fields & Properties
-
-    public InventoryData UserInventory { get; private set; }
-    public List<UserItemData> WeaponItemList { get; private set; }
-    public List<UserItemData> ArmorItemList { get; private set; }
-
-    #endregion
-
-    #region Inventory Data Methods
-
-    public void Initialize()
-    {
-        UserInventory = Manager.Data.Inventory;
-        WeaponItemList = Manager.Data.Inventory.UserItemData.Where(ItemData => ItemData.itemID[0] == 'W').ToList();
-        ArmorItemList = Manager.Data.Inventory.UserItemData.Where(ItemData => ItemData.itemID[0] == 'A').ToList();
-    }
-
-    public UserItemData SearchItem(string itemID)
-    {
-        List<UserItemData> pickItem = UserInventory.UserItemData.Where(itemData => itemData.itemID == itemID).ToList();
-        return pickItem[0];
-    }
-
-    #endregion
-
-    #region Initialize Data Methods
-
-    public void InitItem()
-    {
-        ParseItemData();
-    }
-
-    #endregion
-
     #region ItemData Control Method
 
     /// <summary>
@@ -77,14 +21,14 @@ public class InventoryManager
         //아이템 리스트를 순회하며, 장착 상태를 false로 변경합니다.
         if (equipItem.itemID[0] == 'W')
         {
-            foreach (var item in WeaponItemList)
+            foreach (var item in Manager.Data.WeaponItemList)
             {
                 item.equipped = false;
             }
         }
         else if (equipItem.itemID[0] == 'A')
         {
-            foreach (var item in ArmorItemList)
+            foreach (var item in Manager.Data.ArmorItemList)
             {
                 item.equipped = false;
             }
@@ -147,7 +91,7 @@ public class InventoryManager
             SystemAlertFloating.Instance.ShowMsgAlert(MsgAlertType.CanNotReinforce);
             return;
         }
-        else if(itemdata.level >= 100 &(itemdata.itemID == Manager.Inventory.WeaponItemList.Last().itemID | itemdata.itemID == Manager.Inventory.ArmorItemList.Last().itemID))
+        else if(itemdata.level >= 100 &(itemdata.itemID == Manager.Data.WeaponItemList.Last().itemID | itemdata.itemID == Manager.Data.ArmorItemList.Last().itemID))
         {
             SystemAlertFloating.Instance.ShowMsgAlert(MsgAlertType.ItemLimitLevel);
             return;
@@ -176,27 +120,4 @@ public class InventoryManager
     }
 
     #endregion
-}
-
-[System.Serializable]
-public class InventoryData
-{
-    public List<UserItemData> UserItemData;
-}
-
-[System.Serializable]
-public class UserItemData
-{
-    public string itemID;
-    public int level;
-    public int hasCount;
-    public bool equipped;
-
-    public UserItemData(string ItemID, int Level, int HasCount, bool Equiped)
-    {
-        itemID = ItemID;
-        level = Level;
-        hasCount = HasCount;
-        equipped = Equiped;
-    }
 }

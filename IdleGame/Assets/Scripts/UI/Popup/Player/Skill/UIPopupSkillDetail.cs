@@ -31,7 +31,6 @@ public class UIPopupSkillDetail : UIPopup
 
     #endregion
 
-
     protected override void Init()
     {
         base.Init();
@@ -87,13 +86,13 @@ public class UIPopupSkillDetail : UIPopup
 
     private void SetUISkillData()
     {
-        _bgImg.color = Utilities.SetSlotTierColor(Manager.SkillData.SkillDataDictionary[_data.itemID].Rarity);
-        _IconSprite.sprite = Manager.SkillData.SkillDataDictionary[_data.itemID].Sprite;
+        _bgImg.color = Utilities.SetSlotTierColor(Manager.Data.SkillDataDictionary[_data.itemID].Rarity);
+        _IconSprite.sprite = Manager.Data.SkillDataDictionary[_data.itemID].Sprite;
 
-        _rarityText.color = Utilities.SetSlotTierColor(Manager.SkillData.SkillDataDictionary[_data.itemID].Rarity);
-        _rarityText.text = Manager.SkillData.SkillDataDictionary[_data.itemID].Rarity.ToString();
+        _rarityText.color = Utilities.SetSlotTierColor(Manager.Data.SkillDataDictionary[_data.itemID].Rarity);
+        _rarityText.text = Manager.Data.SkillDataDictionary[_data.itemID].Rarity.ToString();
 
-        _nameText.text = Manager.SkillData.SkillDataDictionary[_data.itemID].SkillName;
+        _nameText.text = Manager.Data.SkillDataDictionary[_data.itemID].SkillName;
         SetUIReinforce();
     }
 
@@ -111,12 +110,12 @@ public class UIPopupSkillDetail : UIPopup
         _reinforceProgressSprite.fillAmount = (float)_data.hasCount / _needCount;
 
         _descriptionText.text = 
-            $"<color=red>{Manager.SkillData.SkillDataDictionary[_data.itemID].SkillDamage + Manager.SkillData.SkillDataDictionary[_data.itemID].ReinforceDamage * (_data.level - 1)}%</color>{Manager.SkillData.SkillDataDictionary[_data.itemID].Description}";
+            $"<color=red>{Manager.Data.SkillDataDictionary[_data.itemID].SkillDamage + Manager.Data.SkillDataDictionary[_data.itemID].ReinforceDamage * (_data.level - 1)}%</color>{Manager.Data.SkillDataDictionary[_data.itemID].Description}";
 
-        _coolTimeText.text = $"쿨타임 : {Manager.SkillData.SkillDataDictionary[_data.itemID].SkillObject.GetComponent<BaseSkill>().CoolDown}초";
+        _coolTimeText.text = $"쿨타임 : {Manager.Data.SkillDataDictionary[_data.itemID].SkillObject.GetComponent<BaseSkill>().CoolDown}초";
 
         _retentionEffectText.text = 
-            $"공격력 + {Manager.SkillData.SkillDataDictionary[_data.itemID].RetentionEffect + Manager.SkillData.SkillDataDictionary[_data.itemID].ReinforceEffect * (_data.level - 1)}% ";
+            $"공격력 + {Manager.Data.SkillDataDictionary[_data.itemID].RetentionEffect + Manager.Data.SkillDataDictionary[_data.itemID].ReinforceEffect * (_data.level - 1)}% ";
     }
 
     private void SetReinforceBtn()

@@ -16,24 +16,24 @@ public class PlayerSkillHandler : MonoBehaviour
         _player = GetComponent<Player>();
     }
 
-    private event Action<int> _skillUseAction;
-    public void AddActionUseSkill(Action<int> skillUseEvent)
+    private event Action<int> _setSkillCoverUI;
+    public void AddActionUseSkill(Action<int> setSkillCoverUI)
     {
-        _skillUseAction += skillUseEvent;
+        _setSkillCoverUI += setSkillCoverUI;
     }
-    public void RemoveActionUseSkill(Action<int> skillUseEvent)
+    public void RemoveActionUseSkill(Action<int> setSkillCoverUI)
     {
-        _skillUseAction -= skillUseEvent;
+        _setSkillCoverUI -= setSkillCoverUI;
     }
 
-    private event Action<int> _skillChangeAction;
-    public void AddActionChangeSkill(Action<int> skillChangeEvent)
+    private event Action<int> _setSkillEquipUI;
+    public void AddActionChangeSkill(Action<int> setSkillEquipUI)
     {
-        _skillChangeAction += skillChangeEvent;
+        _setSkillEquipUI += setSkillEquipUI;
     }
-    public void RemoveActionChangeSkill(Action<int> skillChangeEvent)
+    public void RemoveActionChangeSkill(Action<int> setSkillEquipUI)
     {
-        _skillChangeAction -= skillChangeEvent;
+        _setSkillEquipUI -= setSkillEquipUI;
     }
 
     public void InitSkillSlot()
@@ -60,7 +60,7 @@ public class PlayerSkillHandler : MonoBehaviour
     public void ChangeEquipSkillData(int slotIndex)
     {
         _userEquipSkillSlot[slotIndex].SetSkillObject(Manager.Data.UserSkillData.UserEquipSkill[slotIndex].itemID);
-        _skillChangeAction?.Invoke(slotIndex);
+        _setSkillEquipUI?.Invoke(slotIndex);
     }
 
     public bool ToggleAutoSkill(bool state)
@@ -90,7 +90,7 @@ public class PlayerSkillHandler : MonoBehaviour
                     if (_userEquipSkillSlot[i].SkillScript != null)
                     {
                         _userEquipSkillSlot[i].SkillScript.UseSkill();
-                        _skillUseAction?.Invoke(i);
+                        _setSkillCoverUI?.Invoke(i);
                     }
                 }
         }
@@ -124,7 +124,7 @@ public class EquipSkillData : MonoBehaviour
         }
 
         // 프로퍼티를 설정함
-        var obj = Manager.SkillData.SkillDataDictionary[itemID].SkillObject;
+        var obj = Manager.Data.SkillDataDictionary[itemID].SkillObject;
         SkillObject = Instantiate(obj, Manager.Game.Player.transform);
         SkillObject.transform.parent = transform;
         SkillScript = SkillObject.GetComponent<BaseSkill>();

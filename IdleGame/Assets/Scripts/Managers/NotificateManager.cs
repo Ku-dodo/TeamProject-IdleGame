@@ -44,18 +44,18 @@ public class NotificateManager
 
     public bool CheckEquipmentWeaponBtnNotiState()
     {
-        return CheckReinforceNotiState(Manager.Inventory.WeaponItemList) || !CheckRecommendItem(Manager.Inventory.WeaponItemList).equipped ? true : false;
+        return CheckReinforceNotiState(Manager.Data.WeaponItemList) || !CheckRecommendItem(Manager.Data.WeaponItemList).equipped ? true : false;
     }
 
     public bool CheckEquipmentArmorBtnNotiState()
     {
-        return CheckReinforceNotiState(Manager.Inventory.ArmorItemList) || !CheckRecommendItem(Manager.Inventory.ArmorItemList).equipped ? true : false;
+        return CheckReinforceNotiState(Manager.Data.ArmorItemList) || !CheckRecommendItem(Manager.Data.ArmorItemList).equipped ? true : false;
     }
 
     public UserItemData CheckRecommendItem(List<UserItemData> itemList)
     {
         var recommendItem = CheckUnlockEquipment(itemList)
-            .OrderBy(item => Manager.Inventory.ItemDataDictionary[item.itemID].EquipStat + item.level * Manager.Inventory.ItemDataDictionary[item.itemID].ReinforceEquip)
+            .OrderBy(item => Manager.Data.ItemDataBase[item.itemID].EquipStat + item.level * Manager.Data.ItemDataBase[item.itemID].ReinforceEquip)
             .ToList();
 
         return recommendItem.Count == 0 ? null : recommendItem.Last();
@@ -72,15 +72,15 @@ public class NotificateManager
     //추천 장비 착용 여부를 체크
     public bool CheckEquipRecommendItem()
     {
-        var _weaponRecommendItem = CheckRecommendItem(Manager.Inventory.WeaponItemList);
-        var _armorRecommendItem = CheckRecommendItem(Manager.Inventory.ArmorItemList);
+        var _weaponRecommendItem = CheckRecommendItem(Manager.Data.WeaponItemList);
+        var _armorRecommendItem = CheckRecommendItem(Manager.Data.ArmorItemList);
         // 장비가 아예 없을 경우 false 반환
         if (_weaponRecommendItem == null | _armorRecommendItem == null)
         {
             return false;
         }
         //아니라면 추천 장비를 착용하고 있는 지
-        return CheckReinforceNotiState(Manager.Inventory.UserInventory.UserItemData) | !_weaponRecommendItem.equipped | !_armorRecommendItem.equipped;
+        return CheckReinforceNotiState(Manager.Data.Inventory.UserItemData) | !_weaponRecommendItem.equipped | !_armorRecommendItem.equipped;
     }
 
     public void SetPlayerStateNoti()
@@ -143,7 +143,7 @@ public class NotificateManager
 
     public void SetReinforceWeaponNoti()
     {
-        if (CheckReinforceNotiState(Manager.Inventory.WeaponItemList))
+        if (CheckReinforceNotiState(Manager.Data.WeaponItemList))
         {
             ActiveReinforceWeaponItemNoti?.Invoke();
         }
@@ -155,7 +155,7 @@ public class NotificateManager
 
     public void SetReinforceArmorNoti()
     {
-        if (CheckReinforceNotiState(Manager.Inventory.ArmorItemList))
+        if (CheckReinforceNotiState(Manager.Data.ArmorItemList))
         {
             ActiveReinforceArmorItemNoti?.Invoke();
         }
