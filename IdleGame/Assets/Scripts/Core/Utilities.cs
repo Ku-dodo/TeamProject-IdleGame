@@ -123,6 +123,7 @@ public static class Utilities
 
     #endregion
 
+    #region ColorCollect
     private static string SetTierColor(ItemTier itemTier)
     {
         switch (itemTier)
@@ -147,4 +148,6 @@ public static class Utilities
         ColorUtility.TryParseHtmlString(SetTierColor(itemTier), out Color color);
         return color;
     }
+
+    #endregion
 }

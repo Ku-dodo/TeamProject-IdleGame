@@ -27,7 +27,7 @@ public class GameManager
         Manager.Ranking.Initialize();
         Manager.Stage.Initialize();
         Manager.Summon.Initialize();
-        Manager.Inventory.Initialize();
+        Manager.Data.Initialize();
 
         Main = GameObject.FindObjectOfType<MainScene>();
         Main.SceneStart();

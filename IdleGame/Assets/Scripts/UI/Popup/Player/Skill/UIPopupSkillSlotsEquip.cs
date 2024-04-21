@@ -26,7 +26,7 @@ public class UIPopupSkillSlotsEquip : MonoBehaviour
 
         skillIcon.gameObject.SetActive(true);
 
-        SkillBlueprint sb = Manager.SkillData.SkillDataDictionary[userInvenSkillData.itemID];
+        SkillBlueprint sb = Manager.Data.SkillDataDictionary[userInvenSkillData.itemID];
         _bgImg.color = Utilities.SetSlotTierColor(sb.Rarity);
         skillIcon.sprite = sb.Sprite;
     }

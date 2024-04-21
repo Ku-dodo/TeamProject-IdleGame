@@ -8,7 +8,7 @@ public partial class SummonManager
     #region Fields
 
     private Player _player;
-    private InventoryManager _inventoryManager;
+    private DataManager _dataManager;
     private FollowerDataManager _followerDataManager;
     private UISubSceneShopSummon _shopSummon;
 
@@ -35,7 +35,7 @@ public partial class SummonManager
     public void SetSummon()
     {
         _player = Manager.Game.Player;
-        _inventoryManager = Manager.Inventory;
+        _dataManager = Manager.Data;
     }
 
     public void Initialize()
@@ -191,7 +191,7 @@ public partial class SummonManager
     {
         for (int i = 0; i < summonResult.Length; i++)
         {
-            UserItemData itemData = _inventoryManager.SearchItem(summonResult[i]);
+            UserItemData itemData = _dataManager.SearchItem(summonResult[i]);
             itemData.hasCount++;
         }
     }
@@ -209,7 +209,7 @@ public partial class SummonManager
     {
         for (int i = 0; i < summonResult.Length; i++)
         {
-            UserInvenSkillData skillData = Manager.SkillData.SearchSkill(summonResult[i]);
+            UserInvenSkillData skillData = Manager.Data.SearchSkill(summonResult[i]);
             skillData.hasCount++;
         }
     }

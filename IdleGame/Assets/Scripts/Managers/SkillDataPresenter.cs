@@ -3,30 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class SkillDataManager
+public class SkillDataPresenter
 {
-    private SkillContainerBlueprint _skillDataContainer;
-
-    private Dictionary<string, SkillBlueprint> _skillDataDictionary = new();
-    public Dictionary<string, SkillBlueprint> SkillDataDictionary => _skillDataDictionary;
-
-    public UserInvenSkillData ReplaceSkill;
-
-    public void InitSkill()
-    {
-        ParseSkillData();
-    }
-
-    public void ParseSkillData()
-    {
-        _skillDataContainer = Manager.Asset.GetBlueprint("SkillDataContainer") as SkillContainerBlueprint;
-        //_skillData = JsonUtility.FromJson<SkillDataBase>(_skillDataContainer);
-        foreach (var skillData in _skillDataContainer.skillDatas)
-        {
-            _skillDataDictionary.Add(skillData.ItemID, skillData);
-        }
-    }
-
     #region slot info update
 
     private event Action<int> SetSkillUIEquipSlot;
@@ -93,9 +71,13 @@ public class SkillDataManager
 
     #region Equip Method
 
+    //교체 스킬 데이터
+    public UserInvenSkillData ReplaceSkill;
+
     /// <summary>
     /// userInvenSkillData 장착 시도 후 성공 시 슬롯의 인덱스, 실패 시 감시값을 반환합니다.
-    /// <para> -100 : 해당 아이템을 보유하지 않아 착용 불가, -200 : 장착 가능한 슬롯이  없음</para>
+    /// <para>"-100" : 해당 아이템을 보유하지 않아 착용 불가</para>
+    /// <para>"-200" : 장착 가능한 슬롯이  없음</para>
     /// </summary>
     /// <param name="userInvenSkillData"></param>
     /// <returns></returns>
@@ -143,7 +125,7 @@ public class SkillDataManager
 
     #region Reinforce Method
 
-    //강화 로직
+    //강화로직
     private void ReinforceSkill(UserInvenSkillData userInvenSkillData)
     {
         while (userInvenSkillData.hasCount >= Mathf.Min(userInvenSkillData.level + 1, 15))
@@ -153,7 +135,7 @@ public class SkillDataManager
                 userInvenSkillData.hasCount -= Mathf.Min(userInvenSkillData.level + 1, 15);
                 userInvenSkillData.level += 1;
             }
-            //최고 레벨
+            //최고 레벨 이후 강화 로직
             else
             {
                 int index = Manager.Data.SkillInvenList.FindIndex(item => item.itemID == userInvenSkillData.itemID);
@@ -225,26 +207,4 @@ public class SkillDataManager
     {
         return Manager.Data.SkillInvenDictionary[id];
     }
-}
-
-[System.Serializable]
-public class UserSkillData
-{
-    public List<UserEquipSkillData> UserEquipSkill;
-    public List<UserInvenSkillData> UserInvenSkill;
-}
-
-[System.Serializable]
-public class UserEquipSkillData
-{
-    public string itemID;
-}
-
-[System.Serializable]
-public class UserInvenSkillData
-{
-    public string itemID;
-    public int level;
-    public int hasCount;
-    public bool equipped;
 }

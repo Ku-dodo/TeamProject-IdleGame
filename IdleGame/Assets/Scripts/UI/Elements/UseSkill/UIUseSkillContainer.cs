@@ -16,17 +16,16 @@ public class UIUseSkillContainer : MonoBehaviour
             _slots.Add(gameObject.GetComponentsInChildren<UIUseSkillSlots>()[i]);
             _slots[i].SetUISkillSlot(_playerSkillHandler.UserEquipSkillSlot[i]);
         }
-        _playerSkillHandler.AddActionUseSkill(SetUISkillState);
-        _playerSkillHandler.AddActionChangeSkill(SetSkillUIState);
+        _playerSkillHandler.AddActionChangeSkill(SetSkillUI);
+        _playerSkillHandler.AddActionUseSkill(SetSkillCoverUI);
     }
 
-    public void SetSkillUIState(int index)
+    public void SetSkillUI(int index)
     {
         _slots[index].SetUISkillSlot(_playerSkillHandler.UserEquipSkillSlot[index]);
     }
 
-
-    public void SetUISkillState(int index)
+    public void SetSkillCoverUI(int index)
     {
         _slots[index].SetUIUseSkill();
     }
@@ -35,8 +34,8 @@ public class UIUseSkillContainer : MonoBehaviour
     {
         if(_playerSkillHandler != null)
         {
-            _playerSkillHandler.RemoveActionUseSkill(SetUISkillState);
-            _playerSkillHandler.RemoveActionChangeSkill(SetSkillUIState);
+            _playerSkillHandler.RemoveActionChangeSkill(SetSkillUI);
+            _playerSkillHandler.RemoveActionUseSkill(SetSkillCoverUI);
         }
     }
 }

@@ -104,11 +104,11 @@ public class UIPopupEquipment : UIPopup
     {
         if (_equipFillterType == EquipFillterType.Weapon)
         {
-            _fillterItems = Manager.Inventory.WeaponItemList;
+            _fillterItems = Manager.Data.WeaponItemList;
         }
         else if (_equipFillterType == EquipFillterType.Armor)
         {
-            _fillterItems = Manager.Inventory.ArmorItemList;
+            _fillterItems = Manager.Data.ArmorItemList;
         }
     }
 
@@ -158,30 +158,30 @@ public class UIPopupEquipment : UIPopup
     {
         //UI 정보를 세팅합니다.
         _selectItemData = selectItemData;
-        _itemNameText.text = Manager.Inventory.ItemDataDictionary[selectItemData.itemID].ItemName;
+        _itemNameText.text = Manager.Data.ItemDataBase[selectItemData.itemID].ItemName;
 
-        _rarityText.color = Utilities.SetSlotTierColor(Manager.Inventory.ItemDataDictionary[selectItemData.itemID].Rarity);
-        _rarityText.text = Manager.Inventory.ItemDataDictionary[selectItemData.itemID].Rarity.ToString();
+        _rarityText.color = Utilities.SetSlotTierColor(Manager.Data.ItemDataBase[selectItemData.itemID].Rarity);
+        _rarityText.text = Manager.Data.ItemDataBase[selectItemData.itemID].Rarity.ToString();
 
         _itemLevelText.text = _selectItemData.level.ToString();
 
-        _bgImage.color = Utilities.SetSlotTierColor(Manager.Inventory.ItemDataDictionary[selectItemData.itemID].Rarity);
-        _itemImage.sprite = Manager.Inventory.ItemDataDictionary[_selectItemData.itemID].Sprite;
+        _bgImage.color = Utilities.SetSlotTierColor(Manager.Data.ItemDataBase[selectItemData.itemID].Rarity);
+        _itemImage.sprite = Manager.Data.ItemDataBase[_selectItemData.itemID].Sprite;
 
         CalculateNeedItemCount();
         _itemHasCount.text = $"{_selectItemData.hasCount} / {_needCount}";
         _reinforceProgress.fillAmount = (float)_selectItemData.hasCount / _needCount;
 
 
-        if (Manager.Inventory.ItemDataDictionary[selectItemData.itemID].StatType == StatType.Attack)
+        if (Manager.Data.ItemDataBase[selectItemData.itemID].StatType == StatType.Attack)
         {
-            _equipEffect.text = $"공격력 : {Manager.Inventory.ItemDataDictionary[selectItemData.itemID].EquipStat + Manager.Inventory.ItemDataDictionary[selectItemData.itemID].ReinforceEquip * _selectItemData.level}%";
-            _retentionEffect.text = $"공격력 : {Manager.Inventory.ItemDataDictionary[selectItemData.itemID].RetentionEffect + Manager.Inventory.ItemDataDictionary[selectItemData.itemID].ReinforceEffect * _selectItemData.level}%";
+            _equipEffect.text = $"공격력 : {Manager.Data.ItemDataBase[selectItemData.itemID].EquipStat + Manager.Data.ItemDataBase[selectItemData.itemID].ReinforceEquip * _selectItemData.level}%";
+            _retentionEffect.text = $"공격력 : {Manager.Data.ItemDataBase[selectItemData.itemID].RetentionEffect + Manager.Data.ItemDataBase[selectItemData.itemID].ReinforceEffect * _selectItemData.level}%";
         }
-        else if (Manager.Inventory.ItemDataDictionary[selectItemData.itemID].StatType == StatType.HP)
+        else if (Manager.Data.ItemDataBase[selectItemData.itemID].StatType == StatType.HP)
         {
-            _equipEffect.text = $"체력 : {Manager.Inventory.ItemDataDictionary[selectItemData.itemID].EquipStat + Manager.Inventory.ItemDataDictionary[selectItemData.itemID].ReinforceEquip * _selectItemData.level}%";
-            _retentionEffect.text = $"체력 :  {Manager.Inventory.ItemDataDictionary[selectItemData.itemID].RetentionEffect + Manager.Inventory.ItemDataDictionary[selectItemData.itemID].ReinforceEffect * _selectItemData.level}%";
+            _equipEffect.text = $"체력 : {Manager.Data.ItemDataBase[selectItemData.itemID].EquipStat + Manager.Data.ItemDataBase[selectItemData.itemID].ReinforceEquip * _selectItemData.level}%";
+            _retentionEffect.text = $"체력 :  {Manager.Data.ItemDataBase[selectItemData.itemID].RetentionEffect + Manager.Data.ItemDataBase[selectItemData.itemID].ReinforceEffect * _selectItemData.level}%";
         }
         SetEquipBtn(_selectItemData);
         SetReinforceBtn(_selectItemData);

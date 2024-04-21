@@ -17,7 +17,7 @@ public class NotificateEquipRecommendWeapon : BaseNotiDot
 
     private void SetRecommendItemNoti()
     {
-        var _recommendItem = Manager.Notificate.CheckRecommendItem(Manager.Inventory.WeaponItemList);
+        var _recommendItem = Manager.Notificate.CheckRecommendItem(Manager.Data.WeaponItemList);
 
         if (_recommendItem == null || _recommendItem.equipped)
         {
