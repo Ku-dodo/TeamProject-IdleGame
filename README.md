@@ -19,7 +19,7 @@
 - [Team Notion](https://www.notion.so/68656b3df2a3484695ce7d5b89b83b9d)
 
 ## 담당 영역
-
+[개인 코드 레포지토리](https://github.com/Ku-dodo/TeamProject-IdleGame-PersonalCode)
 |**대분류**|**기능**|**설명**|
 |:-:|:-:|-|
 |`플레이`|Enemy Frame|SO를 이용해 다양한 몬스터를 구현할 수 있도록 하였습니다.|
